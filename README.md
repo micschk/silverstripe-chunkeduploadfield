@@ -1,6 +1,8 @@
 # silverstripe-chunkeduploadfield
 A Silverstripe UploadField that supports (very) large uploads without fiddling with php.ini
 
+![Screenshot](images/screenshot.png)
+
 ## 
 The ChunkedUploadField  hooks into the [jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload/wiki/Chunked-file-uploads) module used internally by the standard UploadField. It sets some extra config and hooks into the upload action to add support for uploading large files in chunks.
 

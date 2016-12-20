@@ -70,6 +70,9 @@ class ChunkedUploadField extends UploadField
         $maxUpload = File::ini2bytes(ini_get('upload_max_filesize'));
         $maxPost = File::ini2bytes(ini_get('post_max_size'));
         $this->setConfig('maxChunkSize', round(min($maxUpload, $maxPost) *0.9)); // ~90%, allow some overhead
+        
+        // set overriden upload object
+        $this->upload = ChunkedUpload::create();
     }
 
     /**
@@ -95,6 +98,7 @@ class ChunkedUploadField extends UploadField
         $name = $this->getName();
         $postVars = $request->postVar($name);
         $uploadedFiles = $this->extractUploadedFileData($postVars);
+        $return = array();
         
         //
         // append all multiparts to one file here before proceeding
@@ -143,8 +147,6 @@ class ChunkedUploadField extends UploadField
                 $response->addHeader('Content-Type', 'text/plain');
                 return $response;
             }
-        } else {
-            $originalFile = $request->requestVar('filename');
         }
         
         // Multipart done (or small enough to have been done in one chunk)...
@@ -153,17 +155,32 @@ class ChunkedUploadField extends UploadField
         $file = $this->saveTemporaryFile($firstFile, $error);
 
         if (empty($file)) {
-            $return = array('error' => $error);
+            array_push($return, array('error' => $error));
         } else {
-            $return = $this->encodeFileAttributes($file);
+            array_push($return, $this->encodeFileAttributes($file));
         }
+        $this->upload->clearErrors();
         
         // Format response with json
-        $response = new SS_HTTPResponse(Convert::raw2json(array($return)));
+        $response = new SS_HTTPResponse(Convert::raw2json($return));
         $response->addHeader('Content-Type', 'text/plain');
-        if (!empty($return['error'])) {
-            $response->setStatusCode(403);
-        }
         return $response;
     }
+}
+
+class ChunkedUpload extends Upload {
+    
+    public function __construct() {
+        parent::__construct();
+        $this->validator = Injector::inst()->create('ChunkedUpload_Validator');
+    }
+    
+}
+
+class ChunkedUpload_Validator extends Upload_Validator {
+    
+    public function isValidSize() {
+        return true;
+    }
+    
 }

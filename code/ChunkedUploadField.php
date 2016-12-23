@@ -179,6 +179,10 @@ class ChunkedUpload extends Upload {
 
 class ChunkedUpload_Validator extends Upload_Validator {
     
+    public function getAllowedMaxFileSize($ext = null) {
+        return false;
+    }
+    
     public function isValidSize() {
         return true;
     }

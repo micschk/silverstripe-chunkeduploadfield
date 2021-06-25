@@ -4,7 +4,7 @@ A Silverstripe UploadField that supports (very) large uploads without fiddling w
 ![Screenshot](images/screenshot.png)
 
 ## This module will not be upgraded to Silverstripe 4<br>
-**The [FilePond module](https://github.com/lekoala/silverstripe-filepond) is recomended as a replacement.**
+**The [FilePond module](https://github.com/lekoala/silverstripe-filepond) is recommended as a replacement.**
 
 ### Silverstripe 3 info
 The ChunkedUploadField  hooks into the [jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload/wiki/Chunked-file-uploads) module used internally by the standard UploadField. It sets some extra config and hooks into the upload action to add support for uploading large files in chunks.

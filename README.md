@@ -1,6 +1,11 @@
 ## This module will not be upgraded to Silverstripe 4<br>
 **The [FilePond module](https://github.com/lekoala/silverstripe-filepond) is recommended as a replacement.**
 
+Thank you for using it in your projects the past seven years.<br>
+It's always cool to see your work being used in well over 5000 projects :-)<br>
+<img width="220" alt="Screenshot 2021-06-25 at 16 13 07" src="https://user-images.githubusercontent.com/1005986/123437819-60dde200-d5d0-11eb-9578-0dd4f8038108.png">
+<br>(packagist data)
+
 # silverstripe-chunkeduploadfield
 A Silverstripe UploadField that supports (very) large uploads without fiddling with php.ini
 
